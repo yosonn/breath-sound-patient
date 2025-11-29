@@ -1,0 +1,392 @@
+/* === styles.css === */
+
+/* 全域變數定義 */
+:root {
+    --primary-color: #00497a; /* 指定的深藍色 */
+    --primary-light: #e6f0f7;
+    --text-color: #333;
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --border-radius: 12px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    
+    /* 狀態顏色 */
+    --color-normal: #28a745;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+    --color-text-light: #666;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* 導航列 */
+.navbar {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar .logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-info {
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+/* 主容器佈局 */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 上半部 Grid 佈局 */
+.top-section {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* 左側較窄，右側顯示圖表較寬 */
+    gap: 20px;
+}
+
+/* 卡片通用樣式 */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h2 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-body {
+    padding: 20px;
+    flex: 1;
+}
+
+/* 按鈕樣式 */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #003355;
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+/* === 左區：錄音面板 === */
+.recording-area {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#timer-display {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-family: monospace;
+    margin: 15px 0;
+}
+
+/* 錄音波形動畫 */
+.visualizer {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    opacity: 0.2; /* 預設為灰色 */
+}
+
+.visualizer.active {
+    opacity: 1;
+}
+
+.wave {
+    width: 6px;
+    height: 100%;
+    background-color: var(--color-danger);
+    border-radius: 3px;
+    animation: none;
+}
+
+.visualizer.active .wave {
+    animation: waveAnimation 1s infinite ease-in-out;
+}
+
+.visualizer.active .wave:nth-child(2) { animation-delay: 0.1s; }
+.visualizer.active .wave:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes waveAnimation {
+    0%, 100% { height: 20%; }
+    50% { height: 100%; }
+}
+
+.hint-text {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 10px;
+}
+
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #ddd;
+    z-index: 0;
+}
+
+.divider span {
+    background: #fff;
+    padding: 0 10px;
+    color: #888;
+    position: relative;
+    z-index: 1;
+    font-size: 0.9rem;
+}
+
+/* 上傳按鈕 */
+.upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #666;
+    transition: 0.3s;
+}
+
+.upload-label:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+.upload-label i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+#audio-upload {
+    display: none;
+}
+
+/* === 右區：分析結果面板 === */
+.alert-box {
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-left: 5px solid #ccc;
+}
+
+/* 狀態樣式切換 */
+.alert-normal {
+    background-color: #d4edda;
+    border-color: var(--color-normal);
+    color: #155724;
+}
+.alert-warning {
+    background-color: #fff3cd;
+    border-color: var(--color-warning);
+    color: #856404;
+}
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: var(--color-danger);
+    color: #721c24;
+}
+
+.alert-icon {
+    font-size: 1.8rem;
+    margin-top: 2px;
+}
+
+.alert-content h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.alert-content p {
+    font-size: 0.9rem;
+}
+
+/* 分析詳細區塊 */
+.analysis-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.chart-container {
+    position: relative;
+    height: 200px;
+    width: 100%;
+}
+
+.stat-item {
+    margin-bottom: 15px;
+}
+
+.stat-item .label {
+    display: block;
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 2px;
+}
+
+.stat-item .value {
+    float: right;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.progress-bar {
+    background: #e9ecef;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar .fill {
+    height: 100%;
+    transition: width 1s ease-in-out;
+}
+
+.fill.normal { background-color: var(--color-normal); }
+.fill.warning { background-color: var(--color-warning); }
+.fill.danger { background-color: var(--color-danger); }
+
+/* === 下半部：表格 === */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.history-table th, .history-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.history-table th {
+    background-color: #f8f9fa;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.history-table tbody tr:hover {
+    background-color: #f1f7fb;
+}
+
+/* 狀態標籤 */
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+}
+.badge-normal { background-color: var(--color-normal); }
+.badge-warning { background-color: var(--color-warning); color: #212529; }
+.badge-danger { background-color: var(--color-danger); }
+
+/* === RWD 手機版適配 === */
+@media (max-width: 768px) {
+    .top-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .analysis-details {
+        grid-template-columns: 1fr; /* 手機版將圖表與數值垂直排列 */
+    }
+
+    .chart-container {
+        height: 180px;
+        margin-bottom: 20px;
+    }
+}
